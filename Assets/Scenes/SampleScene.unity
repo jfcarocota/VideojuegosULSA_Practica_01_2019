@@ -229,6 +229,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
   sfx_coin: {fileID: 8300000, guid: 68b27a410dd882e4293b0a96cabf8540, type: 3}
+  jumpForce: 3
+  rayColor: {r: 1, g: 0, b: 1, a: 1}
+  rayLenght: 0.03
+  dectectionLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  rayPosition: {x: 0.01, y: -0.12}
 --- !u!70 &107198561
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -851,7 +858,7 @@ GameObject:
   - component: {fileID: 1334931281}
   - component: {fileID: 1334931280}
   - component: {fileID: 1334931279}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

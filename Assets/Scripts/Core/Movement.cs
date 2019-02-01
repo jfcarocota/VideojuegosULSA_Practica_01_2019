@@ -11,11 +11,8 @@ namespace Core.Movement
         /// </summary>
         public static Vector2 Axis
         {
-            get
-            {
-                return new Vector2(Input.GetAxis("Horizontal"), 
+            get => new Vector2(Input.GetAxis("Horizontal"), 
                     Input.GetAxis("Vertical"));
-            }
         }
 
         /// <summary>
@@ -23,11 +20,8 @@ namespace Core.Movement
         /// </summary>
         public static Vector2 AxisDelta
         {
-            get
-            {
-                return new Vector2(Input.GetAxis("Horizontal"),
+            get => new Vector2(Input.GetAxis("Horizontal"),
                     Input.GetAxis("Vertical")) * Time.deltaTime;
-            }
         }
 
         /// <summary>
@@ -49,6 +43,24 @@ namespace Core.Movement
         public static void DeltaMovement(Transform t, float speed)
         {
             t.Translate(Vector2.right * AxisDelta.x * speed);
+        }
+
+        /// <summary>
+        /// Returns if player is touching jump button
+        /// </summary>
+        public static bool Btn_Jump
+        {
+            get => Input.GetButtonDown("Jump");
+        }
+
+        /// <summary>
+        /// Makes player jumps with an impulse in rigidbody.
+        /// </summary>
+        /// <param name="rb2d">Rigidbody2D component of player.</param>
+        /// <param name="jumpForce">The magnitude of the jump.</param>
+        public static void PhysicJumpUp(Rigidbody2D rb2d, float jumpForce)
+        {
+            rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 }
