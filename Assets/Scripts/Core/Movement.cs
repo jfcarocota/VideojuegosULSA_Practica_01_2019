@@ -6,6 +6,8 @@ namespace Core.Movement
 {
     public class Movement
     {
+        static Vector2 clampedVelocity;
+
         /// <summary>
         /// This function returns a Vector2 Axis of Horixontal and Vertical Inputs.
         /// </summary>
@@ -61,6 +63,20 @@ namespace Core.Movement
         public static void PhysicJumpUp(Rigidbody2D rb2d, float jumpForce)
         {
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        /// <summary>
+        /// Moves the player with physics on X.
+        /// </summary>
+        /// <param name="rb2d">Rigidbody2D component of player.</param>
+        /// <param name="moveSpeed">The amount of force for movement in x.</param>
+        /// <param name="maxSpeed">The max amount of player movement force in x.</param>
+        public static void PhysicMovement(Rigidbody2D rb2d, float moveSpeed, float maxSpeed)
+        {
+            rb2d.AddForce(Vector2.right * moveSpeed * Axis.x, ForceMode2D.Impulse);
+            clampedVelocity = Vector2.ClampMagnitude(rb2d.velocity, maxSpeed);
+
+            rb2d.velocity = new Vector2(clampedVelocity.x, rb2d.velocity.y);
         }
     }
 }

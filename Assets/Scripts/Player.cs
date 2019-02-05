@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Core.Movement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]
+    Text txtScore;
+    int score = 0;
+
+    [SerializeField]
     float moveSpeed = 0f;
+    [SerializeField, Range(0.1f, 10f)]
+    float maxSpeed = 3f;
+    Vector2 clampedVelocity;
 
     Animator anim;
     SpriteRenderer spr;
@@ -44,15 +52,18 @@ public class Player : MonoBehaviour
     {
         moveX = Movement.Axis.x;
 
-        Movement.DeltaMovement(transform, moveSpeed);
+        //Movement.DeltaMovement(transform, moveSpeed);
 
-        anim.SetFloat("MoveX", Mathf.Abs(moveX));
+        anim.SetFloat("MoveX", Mathf.Abs(moveX)); 
 
         spr.flipX = moveX < 0f ? true : moveX > 0f ? false : spr.flipX;
     }
 
     private void FixedUpdate()
     {
+
+        Movement.PhysicMovement(rb2d, moveSpeed, maxSpeed);
+
         if (Movement.Btn_Jump && Grounding)
         {
             Movement.PhysicJumpUp(rb2d, jumpForce);
@@ -68,6 +79,8 @@ public class Player : MonoBehaviour
     public void PlayCoinSFX()
     {
         auds.PlayOneShot(sfx_coin, 7f);
+        score++;
+        txtScore.text = "<color=#00ffffff>Score:</color> " + score.ToString();
     }
 
     private void OnDrawGizmos()
